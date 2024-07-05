@@ -1,6 +1,6 @@
 import { Table } from "./components/table";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className=" w-full">
       <div className="my-10">
