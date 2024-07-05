@@ -30,21 +30,6 @@ export function TableRow({
             <div className="detail-headers py-3">{eventData.action_name}</div>
           </div>
 
-          {/* <div className="w-full md:w-1/3  px-6 ">
-            <div className="detail-headers py-3">
-              {eventData.occurred_at.toString()}
-            </div>
-            <div className="ml-2">
-              <Image
-                className="bg-red-500  justify-items-end"
-                src="/vector-stroke.svg"
-                alt="arrow-right"
-                width={9}
-                height={14}
-              />
-            </div>
-          </div> */}
-
           <div className="w-full md:w-1/3 px-6  flex items-center">
             <div className="detail-headers py-3">
               {eventData.occurred_at.toString()}
