@@ -1,18 +1,13 @@
 import { useSearchParams } from "next/navigation";
 export type EventData = {
   id: number;
-  actor_id: string;
+  occurred_at: string;
+  actor_email: string;
   actor_name: string;
-  group: string;
-  action_id: string;
+  actor_id: string;
   action_name: string;
+  action_id: string;
   target_id: string;
-  target_name: string;
-  location: string;
-  occurred_at: Date;
-  metadata_redirect: string;
-  metadata_description: string;
-  metadata_request_id: string;
 };
 export function Detail({
   eventData,
@@ -35,7 +30,7 @@ export function Detail({
               </div>
               <div className="flex py-2">
                 <div className="detail-sub-headers  min-w-16 pr-2">Email</div>
-                <div className="w-2/3 detail-text">{eventData.group}</div>
+                <div className="w-2/3 detail-text">{eventData.actor_email}</div>
               </div>
               <div className="flex py-2">
                 <div className="detail-sub-headers  min-w-16 pr-2">ID</div>
