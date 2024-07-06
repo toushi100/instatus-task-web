@@ -4,7 +4,6 @@ import { Detail, EventData } from "../detail";
 import { SearchBar } from "../search-bar";
 import { TableRow } from "../table-row";
 import { index } from "../../../../tools/endpoints/events";
-import { all } from "axios";
 
 export function Table() {
   const [eventData, setEventData] = useState<EventData[]>([]);

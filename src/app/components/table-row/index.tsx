@@ -24,7 +24,9 @@ export function TableRow({
                 {eventData.actor_name.charAt(0).toUpperCase()}
               </div>
             </div>
-            <div className="detail-headers py-3 mx-4">{eventData.group}</div>
+            <div className="detail-headers py-3 mx-4">
+              {eventData.actor_name}
+            </div>
           </div>
           <div className="w-full md:w-1/3 px-6">
             <div className="detail-headers py-3">{eventData.action_name}</div>

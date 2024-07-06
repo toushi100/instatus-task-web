@@ -1,5 +1,4 @@
 "use client";
-import { on } from "events";
 import React, { useState } from "react";
 export function SearchBar({ onData, onLive, currentLiveValue }: any) {
   const handleInputChange = (event: any) => {
