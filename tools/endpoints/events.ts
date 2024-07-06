@@ -17,7 +17,7 @@ type CreateEventParams = {
 export function index(commonApiParams?: ApiCommonParams) {
   const params = commonApiParams || {};
 
-  return client.get("", { params: params });
+  return client.get("/events", { params: params });
 }
 
 export function create(createEventParams: CreateEventParams) {
@@ -30,7 +30,7 @@ export function create(createEventParams: CreateEventParams) {
     metadata_redirect,
     metadata_description,
   } = createEventParams;
-  return client.post("", {
+  return client.post("/events", {
     actor_name,
     group,
     action_name,
