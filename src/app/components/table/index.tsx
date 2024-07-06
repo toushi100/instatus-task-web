@@ -9,12 +9,14 @@ export function Table() {
   const [eventData, setEventData] = useState<EventData[]>([]);
   const [count, setCount] = useState(0);
   const [skip, setSkip] = useState(0);
+  const [search, setSearch] = useState("");
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   const take = 10;
-  const paginatianParams = {
+  const params = {
     skip,
     take,
+    q: search,
   };
   const getNextBatch = () => {
     if (count < take) return;
@@ -22,13 +24,20 @@ export function Table() {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const response = await index(paginatianParams);
-      setEventData([...eventData, ...response.data]);
+      const response = await index(params);
+      if (params.q) {
+        setEventData(response.data);
+      } else {
+        setEventData([...eventData, ...response.data]);
+      }
       setCount(response.data.length);
     };
     fetchData();
-  }, [skip]);
+  }, [skip, search]);
 
+  const handleSearchBarData = (input: string) => {
+    setSearch(input);
+  };
   const handleRowClick = (id: number) => {
     setExpandedRow(expandedRow === id ? null : id);
   };
@@ -37,7 +46,7 @@ export function Table() {
     <>
       <div className=" w-10/12 ">
         <div className="mx-auto">
-          <SearchBar />
+          <SearchBar onData={handleSearchBarData} />
 
           <div className="container mx-auto py-6 px-8 table-head-color ">
             <div className="flex flex-wrap">
