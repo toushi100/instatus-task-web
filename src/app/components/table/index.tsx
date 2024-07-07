@@ -4,6 +4,7 @@ import { Detail, EventData } from "../detail";
 import { SearchBar } from "../search-bar";
 import { TableRow } from "../table-row";
 import { index } from "../../../../tools/endpoints/events";
+import { mkConfig, generateCsv, download } from "export-to-csv";
 
 export function Table() {
   const [eventData, setEventData] = useState<EventData[]>([]);
@@ -11,7 +12,8 @@ export function Table() {
   const [skip, setSkip] = useState(0);
   const [search, setSearch] = useState("");
   const [live, setLive] = useState(false);
-
+  const [enableCheckbox, setEnableCheckbox] = useState(false);
+  const [selectedRecords, setSelectedRecords] = useState<number[]>([]);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   const take = 10;
@@ -59,8 +61,22 @@ export function Table() {
       }
     };
   }, [live]);
+
   const handleSearchBarData = (input: string) => {
     setSearch(input);
+  };
+  const handleExportButtonClicked = (input: boolean) => {
+    setEnableCheckbox(input);
+    if (!input) {
+      setSelectedRecords([]);
+    }
+  };
+  const selectedRecord = (input: number) => {
+    if (selectedRecords.includes(input)) {
+      setSelectedRecords(selectedRecords.filter((id) => id !== input));
+      return;
+    }
+    setSelectedRecords([...selectedRecords, input]);
   };
   const handelLive = (input: boolean) => {
     setLive(input);
@@ -68,7 +84,21 @@ export function Table() {
   const handleRowClick = (id: number) => {
     setExpandedRow(expandedRow === id ? null : id);
   };
+
+  const downloadSelected = () => {
+    const csvConfig = mkConfig({ useKeysAsHeaders: true });
+    const recordsToBeExported = eventData.filter((record) =>
+      selectedRecords.includes(record.id)
+    );
+    const csv = generateCsv(csvConfig)(recordsToBeExported);
+    download(csvConfig)(csv);
+    setEnableCheckbox(false);
+    setExpandedRow(null);
+  };
   const disableLoadMore = count < take ? "disabled cursor-not-allowed" : "";
+  const disableExport =
+    selectedRecords.length === 0 ? "disabled cursor-not-allowed" : "";
+  const hideExport = !enableCheckbox ? "hidden" : "";
 
   return (
     <>
@@ -78,6 +108,8 @@ export function Table() {
             onData={handleSearchBarData}
             onLive={handelLive}
             currentLiveValue={live}
+            onExport={handleExportButtonClicked}
+            exportButtonClicked={enableCheckbox}
           />
 
           <div className="container mx-auto py-6 px-8 table-head-color ">
@@ -96,17 +128,31 @@ export function Table() {
           </div>
           {eventData.map((event: EventData) => (
             <div onClick={() => handleRowClick(event.id)}>
-              <TableRow eventData={event} visibility={expandedRow} />
-              <Detail eventData={event} visibility={expandedRow} />
+              <TableRow
+                eventData={event}
+                visibility={expandedRow}
+                checkboxEnabled={enableCheckbox}
+                checkboxSelected={selectedRecord}
+              />
+              <Detail
+                eventData={event}
+                visibility={expandedRow}
+                checkboxEnabled={enableCheckbox}
+              />
             </div>
           ))}
-
-          <button
-            className={`w-full py-5 load-more-color ${disableLoadMore}`}
-            onClick={() => getNextBatch()}
-          >
-            LOAD MORE
-          </button>
+          <div className="flex justify-center load-more-color">
+            <button
+              className={`w-full py-5  ${disableLoadMore}`}
+              onClick={() => getNextBatch()}
+            >
+              LOAD MORE
+            </button>
+            <button
+              className={`w-full py-5  ${disableExport} ${hideExport}`}
+              onClick={downloadSelected}
+            >{` EXPORT (${selectedRecords.length}) `}</button>
+          </div>
         </div>
       </div>
     </>
