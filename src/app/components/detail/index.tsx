@@ -12,11 +12,14 @@ export type EventData = {
 export function Detail({
   eventData,
   visibility,
+  checkboxEnabled,
 }: {
   eventData: EventData;
   visibility: number | null;
+  checkboxEnabled: boolean;
 }) {
-  const showDetail = visibility === eventData.id ? "block" : "hidden";
+  const showDetail =
+    visibility === eventData.id && !checkboxEnabled ? "block" : "hidden";
   return (
     <>
       <div className={`detail-border detail-shadow scale-x-105 ${showDetail}`}>

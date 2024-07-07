@@ -1,23 +1,31 @@
 import React from "react";
 import Image from "next/image";
-import arrowRight from "../../public/vector-stroke.svg";
+
 import { EventData } from "../detail";
 export function TableRow({
   eventData,
   visibility,
+  checkboxEnabled,
+  checkboxSelected,
 }: {
   eventData: EventData;
-
   visibility: number | null;
+  checkboxEnabled: boolean;
+  checkboxSelected: any;
 }) {
-  const showDetail = visibility === eventData.id ? "hidden" : "block";
+  const [checkedRow, setCheckedRow] = React.useState<number | null>(null);
+  const showDetail =
+    visibility === eventData.id && !checkboxEnabled ? "hidden" : "block";
+  const handleOnClick = (id: number) => {
+    setCheckedRow(id);
+    checkboxSelected(id);
+  };
+
   return (
     <div className={`${showDetail}`}>
       <div className="container mx-auto py-3 px-6  border">
         <div className="flex flex-wrap">
-          {/* <div className="w-full md:w-1/3 px-6">
-            <div className=" detail-headers py-3">{eventData.group}</div>
-          </div> */}
+          <div></div>
           <div className="w-full md:w-1/3 px-6 flex items-center">
             <div className="ml-2 image-sub">
               <div className="single-letter ">
@@ -37,13 +45,21 @@ export function TableRow({
               {eventData.occurred_at.toString()}
             </div>
             <div className="ml-2 w-full flex  ">
-              <Image
-                className=" ml-auto "
-                src="/vector-stroke.svg"
-                alt="arrow-right"
-                width={9}
-                height={14}
-              />
+              {checkboxEnabled ? (
+                <input
+                  type="checkbox"
+                  className="checkbox ml-auto"
+                  onClick={() => handleOnClick(eventData.id)}
+                />
+              ) : (
+                <Image
+                  className=" ml-auto "
+                  src="/vector-stroke.svg"
+                  alt="arrow-right"
+                  width={9}
+                  height={14}
+                />
+              )}
             </div>
           </div>
         </div>
