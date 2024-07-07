@@ -23,7 +23,14 @@ export function SearchBar({
   return (
     <div className="px-6 pt-8 pb-2 table-head-color w-full flex items-center border-radius">
       <input
-        className="search-bar-input w-full "
+        className=" w-full "
+        style={{
+          height: "45px",
+          opacity: "0px",
+          backgroundColor: "#f5f5f5",
+          border: "1px solid #e0e0df",
+          borderRadius: "8px 0px 0px 8px",
+        }}
         type="text"
         placeholder=" Search name, email or action..."
         onChange={handleInputChange}
