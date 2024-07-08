@@ -112,7 +112,7 @@ export function Table() {
             exportButtonClicked={enableCheckbox}
           />
 
-          <div className="container mx-auto py-6 px-8 table-head-color ">
+          <div className=" mx-auto py-6 px-8 table-head-color ">
             <div className="flex flex-wrap">
               <div className="w-full md:w-1/3 px-6">
                 <div className="detail-headers py-3">ACTOR</div>

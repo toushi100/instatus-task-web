@@ -23,7 +23,7 @@ export function TableRow({
 
   return (
     <div className={`${showDetail}`}>
-      <div className="container mx-auto py-3 px-6  border">
+      <div className=" mx-auto py-3 px-6  border">
         <div className="flex flex-wrap">
           <div></div>
           <div className="w-full md:w-1/3 px-6 flex items-center">
