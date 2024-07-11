@@ -23,7 +23,7 @@ export function Detail({
   return (
     <>
       <div className={`detail-border detail-shadow scale-x-105 ${showDetail}`}>
-        <div className="container mx-auto py-6 px-8 scale-x-95">
+        <div className=" mx-auto py-6 px-8 scale-x-95">
           <div className="flex flex-wrap">
             <div className="w-full md:w-1/3 px-6">
               <div className="detail-headers py-3">ACTOR</div>
